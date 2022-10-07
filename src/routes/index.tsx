@@ -79,6 +79,9 @@ const AdvancedTables = React.lazy(() => import('../pages/tables/Advanced'));
 const GoogleMaps = React.lazy(() => import('../pages/maps/GoogleMaps'));
 const VectorMaps = React.lazy(() => import('../pages/maps/VectorMaps'));
 
+// maps
+const Skills = React.lazy(() => import('../pages/assessment/Skills'));
+
 export interface RoutesProps {
     path: RouteProps['path'];
     name?: string;
@@ -462,6 +465,17 @@ const otherPublicRoutes: RoutesProps[] = [
     },
 ];
 
+
+// assessment routes
+const assessmentRoutes: RoutesProps = {
+    path: '/assessment/skills',
+    name: 'skills',
+    route: PrivateRoute,
+    roles: ['Admin'],
+    icon: 'folder-plus',
+    component: Skills,
+};
+
 // flatten the list of all nested routes
 const flattenRoutes = (routes: RoutesProps[]) => {
     let flatRoutes: RoutesProps[] = [];
@@ -478,7 +492,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
 };
 
 // All routes
-const authProtectedRoutes = [rootRoute, dashboardRoutes, ...appRoutes, extrapagesRoutes, uiRoutes];
+const authProtectedRoutes = [rootRoute, dashboardRoutes, ...appRoutes, extrapagesRoutes, uiRoutes, assessmentRoutes];
 const publicRoutes = [...authRoutes, ...otherPublicRoutes];
 
 const authProtectedFlattenRoutes = flattenRoutes([...authProtectedRoutes]);

@@ -44,6 +44,13 @@ const MENU_ITEMS: MenuItemTypes[] = [
         url: '/apps/calendar',
     },
     {
+        key: 'assessment-skills',
+        label: 'Skills',
+        isTitle: false,
+        icon: 'feather',
+        url: '/assessment/Skills',
+    },
+    {
         key: 'apps-chat',
         label: 'Chat',
         isTitle: false,
