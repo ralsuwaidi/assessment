@@ -574,7 +574,7 @@ const FormWizard = () => {
             </Row>
 
             <Row>
-                <Col lg={6}>
+                <Col lg={12}>
                     <WizardWithFormValidation />
                 </Col>
             </Row>
