@@ -6,6 +6,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import PageTitle from "../../components/PageTitle";
 import Spinner from "../../components/Spinner";
 import Table from "../../components/Table";
+import StatisticsWidget from "../widgets/StatisticsWidget";
 
 const columns = [
     {
@@ -77,6 +78,12 @@ const Skills = () => {
                     ]}
                     title={"Skills Catalog"}
                 />
+
+                <Row>
+                    <Col sm={6} xl={3}>
+                    <StatisticsWidget variant="info" title="Skill Assessments" stats={data.skillAssessmentCatalog.nodes.length} icon="feather" />
+                    </Col>
+                </Row>
 
                 <Row>
                     <Col>
