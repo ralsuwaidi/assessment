@@ -1,7 +1,7 @@
 // images
 import userAvatar from '../../../assets/images/users/avatar-7.jpg';
 
-export interface UserInfoTypes {
+export interface ProfileInfoTypes {
     userName?: string;
     avatar?: string;
     designation?: string;
@@ -14,7 +14,7 @@ export interface UserInfoTypes {
     skills?: string[];
 }
 
-const userInfo: UserInfoTypes = {
+const userInfo: ProfileInfoTypes = {
     userName: 'Shreyu N',
     designation: 'User Experience Specialist',
     location: 'San Francisco, CA',

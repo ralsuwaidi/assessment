@@ -2,10 +2,10 @@ import React from 'react';
 import { Card, ProgressBar, Button } from 'react-bootstrap';
 
 // types
-import { UserInfoTypes } from './data';
+import { ProfileInfoTypes } from './data';
 
 interface PersonalDetailsProps {
-    userInfo: UserInfoTypes;
+    userInfo: ProfileInfoTypes;
 }
 
 const PersonalDetails = ({ userInfo }: PersonalDetailsProps) => {

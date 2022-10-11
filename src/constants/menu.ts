@@ -44,11 +44,31 @@ const MENU_ITEMS: MenuItemTypes[] = [
         url: '/apps/calendar',
     },
     {
-        key: 'assessment-skills',
+        key: 'skills',
         label: 'Skills',
         isTitle: false,
         icon: 'feather',
-        url: '/assessment/Skills',
+        children: [
+            {
+                key: 'skills-catalogue',
+                label: 'Catalogue',
+                url: '/skills/catalogue',
+                parentKey: 'skills',
+            },
+            {
+                key: 'skills-results',
+                label: 'Results',
+                url: '/skills/results',
+                parentKey: 'skills',
+            },
+        ]
+    },
+    {
+        key: 'profile',
+        label: 'Profile',
+        isTitle: false,
+        icon: 'users',
+        url: '/portfolio',
     },
     {
         key: 'apps-chat',

@@ -79,8 +79,14 @@ const AdvancedTables = React.lazy(() => import('../pages/tables/Advanced'));
 const GoogleMaps = React.lazy(() => import('../pages/maps/GoogleMaps'));
 const VectorMaps = React.lazy(() => import('../pages/maps/VectorMaps'));
 
-// maps
+// skills
 const Skills = React.lazy(() => import('../pages/assessment/Skills'));
+const Results = React.lazy(() => import('../pages/assessment/Results'));
+
+// profile
+const Profiles = React.lazy(() => import('../pages/assessment/Profile'));
+const profileDetail = React.lazy(() => import('../pages/assessment/Profile'));
+
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -462,18 +468,52 @@ const otherPublicRoutes: RoutesProps[] = [
         name: 'Error - 500',
         component: Error500,
         route: Route,
-    },
+    }
 ];
 
 
 // assessment routes
 const assessmentRoutes: RoutesProps = {
-    path: '/assessment/skills',
-    name: 'skills',
+    path: '/skills',
+    name: 'Skills',
+    icon: 'feather',
+    header: 'Skills',
+    children: [
+        {
+            path: '/skills/catalogue',
+            name: 'skills',
+            route: PrivateRoute,
+            roles: ['Admin'],
+            icon: 'folder-plus',
+            component: Skills,
+        },
+        {
+            path: '/skills/results',
+            name: 'results',
+            route: PrivateRoute,
+            roles: ['Admin'],
+            icon: 'folder-plus',
+            component: Results,
+        }
+    ]
+};
+
+// assessment routes
+const profileRoute: RoutesProps = {
+    path: '/portfolio',
+    name: 'profile',
     route: PrivateRoute,
     roles: ['Admin'],
-    icon: 'folder-plus',
-    component: Skills,
+    icon: 'user',
+    component: Profiles,
+};
+
+// assessment routes
+const profileDetailRoute: RoutesProps = {
+    path: '/portfolio/:username',
+    name: 'profile',
+    icon: 'user',
+    component: profileDetail,
 };
 
 // flatten the list of all nested routes
@@ -492,7 +532,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
 };
 
 // All routes
-const authProtectedRoutes = [rootRoute, dashboardRoutes, ...appRoutes, extrapagesRoutes, uiRoutes, assessmentRoutes];
+const authProtectedRoutes = [rootRoute, dashboardRoutes, ...appRoutes, extrapagesRoutes, uiRoutes, assessmentRoutes, profileRoute, profileDetailRoute];
 const publicRoutes = [...authRoutes, ...otherPublicRoutes];
 
 const authProtectedFlattenRoutes = flattenRoutes([...authProtectedRoutes]);
