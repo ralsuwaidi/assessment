@@ -91,7 +91,7 @@ const Results = () => {
                         <StatisticsWidget variant="info" title="Total Users" stats={totalProfiles.toString()} icon="users" />
                     </Col>
                     <Col sm={6} xl={3}>
-                        <StatisticsWidget variant="info" title="Emirati Testers" stats={totalLocal.toString()} icon="user-plus" />
+                        <StatisticsWidget variant="info" title="Emirati Users" stats={totalLocal.toString()} icon="user-plus" />
                     </Col>
                     <Col sm={6} xl={3}>
                         <StatisticsWidget variant="info" title="Total Tests Taken" stats={totalSkills.toString()} icon="feather" />
@@ -103,7 +103,7 @@ const Results = () => {
                         <StatisticsWidget variant="primary" title="Total Looking For Jobs" stats={lfJobs.toString()} icon="clipboard" />
                     </Col>
                     <Col sm={6} xl={3}>
-                        <StatisticsWidget variant="primary" title="Locals Looking For Jobs" stats={llfj.toString()} icon="clipboard" />
+                        <StatisticsWidget variant="primary" title="Emirati Looking For Jobs" stats={llfj.toString()} icon="clipboard" />
                     </Col>
                 </Row>
 
@@ -161,7 +161,7 @@ const Results = () => {
                         <RadialBarChart radarChartData={maleRatio} title="Male / Female Ratio" />
                     </Col>
                     <Col xxl={4} md={6}>
-                        <RadialBarChart radarChartData={localMaleRatio} title="Local Male / Local Female Ratio" />
+                        <RadialBarChart radarChartData={localMaleRatio} title="Emirati Male / Female Ratio" />
                     </Col>
                 </Row>
             </Container>
