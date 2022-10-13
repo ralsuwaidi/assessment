@@ -468,6 +468,20 @@ const otherPublicRoutes: RoutesProps[] = [
         name: 'Error - 500',
         component: Error500,
         route: Route,
+    },
+    {
+        path: '/skills/catalogue',
+        name: 'skills',
+        icon: 'folder-plus',
+        route: Route,
+        component: Skills,
+    },
+    {
+        path: '/skills/results',
+        name: 'results',
+        icon: 'folder-plus',
+        route: Route,
+        component: Results,
     }
 ];
 
@@ -479,22 +493,20 @@ const assessmentRoutes: RoutesProps = {
     icon: 'feather',
     header: 'Skills',
     children: [
-        {
-            path: '/skills/catalogue',
-            name: 'skills',
-            route: PrivateRoute,
-            roles: ['Admin'],
-            icon: 'folder-plus',
-            component: Skills,
-        },
-        {
-            path: '/skills/results',
-            name: 'results',
-            route: PrivateRoute,
-            roles: ['Admin'],
-            icon: 'folder-plus',
-            component: Results,
-        }
+        // {
+        //     path: '/skills/catalogue',
+        //     name: 'skills',
+        //     icon: 'folder-plus',
+        //     route: PrivateRoute,
+        //     component: Skills,
+        // },
+        // {
+        //     path: '/skills/results',
+        //     name: 'results',
+        //     icon: 'folder-plus',
+        //     route: PrivateRoute,
+        //     component: Results,
+        // }
     ]
 };
 
@@ -503,7 +515,6 @@ const profileRoute: RoutesProps = {
     path: '/portfolio',
     name: 'profile',
     route: PrivateRoute,
-    roles: ['Admin'],
     icon: 'user',
     component: Profiles,
 };
