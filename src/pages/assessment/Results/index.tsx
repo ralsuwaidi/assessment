@@ -1,117 +1,78 @@
 import { gql, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Row, Table } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import PageTitle from '../../../components/PageTitle';
 import StatisticsWidget from '../../widgets/StatisticsWidget';
 
 // components
 import { ApexNonLinearChartData } from '../../charts/data';
 import StatisticsWidget2 from '../../widgets/StatisticsWidget2';
+import RadialBarChart from './GenderChart';
 
-interface TableRecords {
-    quintileLevel: string;
-    measurementType: string;
-    skillName: string;
+interface AnalyticsTypes {
+    total_skill: number;
+    total_profiles: number;
+    quintile_levels: number[];
+    repeat_num: number;
+    local_num: number;
+    total_males: number;
+    total_local_males: number;
+    total_female: number;
+    total_local_female: number;
+    total_lfj: number;
+    local_lfj: number;
 }
 
-const BasicTable = (records: TableRecords[]) => {
-    return (
-        <Card>
-            <Card.Body>
-                <h4 className="header-title mt-0 mb-1">Basic example</h4>
-                <p className="sub-header">
-                    For basic styling—light padding and only horizontal dividers—add the base class <code>.table</code>{' '}
-                    to any <code>&lt;Table&gt;</code>.
-                </p>
 
-                <div className="table-responsive">
-                    <Table className="table mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">Skill Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {(records || []).map((record, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <th scope="row">{record.skillName}</th>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </Table>
-                </div>
-            </Card.Body>
-        </Card>
-    );
-};
 
 const Results = () => {
     const [results, setResults] = useState([])
-    const [noviceNum, setNoviceNum] = useState(0)
-    const [emergingNum, setEmergingNum] = useState(0)
-    const [averageNum, setAverageNum] = useState(0)
-    const [aboveAverageNum, setAboveAverageNum] = useState(0)
-    const [expertNum, setExpertNum] = useState(0)
+
     const [retakes, setRetakes] = useState(0)
+    const [totalProfiles, setTotalProfiles] = useState(0)
+    const [quintileLevels, setQuintileLevels] = useState([0, 0, 0, 0, 0])
+    const [totalSkills, setTotalSkills] = useState(0)
+    const [totalMale, setTotalMale] = useState(0)
+    const [totalLocalMale, setTotalLocalMale] = useState(0)
+    const [totalLocal, setTotalLocal] = useState(0)
+    const [lfJobs, setlfJobs] = useState(0)
+    const [llfj, setllfJobs] = useState(0)
 
-    const multiRadarChartData: ApexNonLinearChartData = {
-        data: [0, 0, 0, 0, 0],
+    const maleRatio: ApexNonLinearChartData = {
+        data: [totalMale],
     };
-    const [chartData, setChartData] = useState(multiRadarChartData)
 
-    const COURSE_CATALOG = gql`
-    query {
-        skillAssessmentResults (first: 500) {
-          nodes {
-            quintileLevel
-            measurementType
-            skillName
-          }
-        }
-      }
-  `;
+    const localMaleRatio: ApexNonLinearChartData = {
+        data: [totalLocalMale],
+    };
 
-    const { loading: rLoading, error: rError, data: rData } = useQuery(COURSE_CATALOG);
 
-    useEffect(() => {
-        if (!rLoading) {
-            if (!rError) {
+    React.useEffect(() => {
+        const loadAsyncStuff = async () => {
+            const response = await fetch("https://codershq.ae/api/assessment/analytics/")
+            console.log(response.json().then(
+                data => {
+                    const analytics: AnalyticsTypes = data.data
+                    setRetakes(analytics.repeat_num)
+                    setQuintileLevels(analytics.quintile_levels)
+                    setTotalProfiles(analytics.total_profiles)
+                    setTotalSkills(analytics.total_skill)
+                    setTotalLocal(analytics.total_local_males+analytics.total_local_female)
+                    setlfJobs(analytics.total_lfj)
+                    setllfJobs(analytics.local_lfj)
 
-                // 'novice', 'proficient-emerging', 'proficient-average', 'proficient-above-average', 'expert
 
-                let novice = 0
-                let proficientEmerging = 0
-                let proficientAverage = 0
-                let proficientAboveAverage = 0
-                let expert = 0
-                let retakes = 0
-                const data = rData.skillAssessmentResults.nodes
-                setResults(data)
-                for (let index = 0; index < data.length; index++) {
-                    const element = data[index];
-                    if (element.quintileLevel == 'novice') novice++;
-                    if (element.quintileLevel == 'proficient-emerging') proficientEmerging++;
-                    if (element.quintileLevel == 'proficient-average') proficientAverage++;
-                    if (element.quintileLevel == 'proficient-above-average') proficientAboveAverage++;
-                    if (element.quintileLevel == 'expert') expert++;
-                    if (element.measurementType == 'retake') retakes++;
-
+                    const all_users = analytics.total_profiles
+                    setTotalMale(Math.trunc((analytics.total_males/all_users)*100))
+                    const all_local = analytics.total_local_female + analytics.total_local_female
+                    setTotalLocalMale(Math.trunc((analytics.total_local_males/all_local)*100))
                 }
-                setNoviceNum(novice)
-                setEmergingNum(proficientEmerging)
-                setAverageNum(proficientAverage)
-                setAboveAverageNum(proficientAboveAverage)
-                setExpertNum(expert)
-                const multiRadarChartData: ApexNonLinearChartData = {
-                    data: [novice, proficientEmerging, proficientAverage, proficientAboveAverage, expert],
-                };
-                setChartData(multiRadarChartData)
-                setRetakes(retakes)
-            }
+            ))
         }
-    }, [rData]);
+        loadAsyncStuff()
+    }, []);
+
+
 
 
     return (
@@ -126,58 +87,80 @@ const Results = () => {
 
             <Row>
                 <Col sm={6} xl={3}>
-                    <StatisticsWidget variant="info" title="Total Tests Taken" stats={results.length.toString()} icon="feather" />
+                    <StatisticsWidget variant="info" title="Total Users" stats={totalProfiles.toString()} icon="users" />
+                </Col>
+                <Col sm={6} xl={3}>
+                    <StatisticsWidget variant="info" title="Emirati Testers" stats={totalLocal.toString()} icon="user-plus" />
+                </Col>
+                <Col sm={6} xl={3}>
+                    <StatisticsWidget variant="info" title="Total Tests Taken" stats={totalSkills.toString()} icon="feather" />
                 </Col>
                 <Col sm={6} xl={3}>
                     <StatisticsWidget variant="info" title="Retakes" stats={retakes.toString()} icon="repeat" />
                 </Col>
+                <Col sm={6} xl={3}>
+                    <StatisticsWidget variant="primary" title="Total Looking For Jobs" stats={lfJobs.toString()} icon="clipboard" />
+                </Col>
+                <Col sm={6} xl={3}>
+                    <StatisticsWidget variant="primary" title="Locals Looking For Jobs" stats={llfj.toString()} icon="clipboard" />
+                </Col>
             </Row>
+
 
             <Row>
                 <Col sm={6} xl={3}>
                     <StatisticsWidget2
                         variant="primary"
                         title="Novice"
-                        stats={noviceNum.toString()}
-                        progress={(noviceNum / results.length) * 100}
-                        description={Math.trunc((noviceNum / results.length) * 100).toString() + "% of total scores"}
+                        stats={quintileLevels[0].toString()}
+                        progress={(quintileLevels[0] / totalSkills) * 100}
+                        description={Math.trunc((quintileLevels[0] / totalSkills) * 100).toString() + "% of total scores"}
                     />
                 </Col>
                 <Col sm={6} xl={3}>
                     <StatisticsWidget2
                         variant="primary"
                         title="Emerging Scores"
-                        stats={emergingNum.toString()}
-                        progress={(emergingNum / results.length) * 100}
-                        description={Math.trunc((emergingNum / results.length) * 100).toString() + "% of total scores"}
+                        stats={quintileLevels[1].toString()}
+                        progress={(quintileLevels[1] / totalSkills) * 100}
+                        description={Math.trunc((quintileLevels[1] / totalSkills) * 100).toString() + "% of total scores"}
                     />
                 </Col>
                 <Col sm={6} xl={3}>
                     <StatisticsWidget2
                         variant="primary"
                         title="Average Scores"
-                        stats={averageNum.toString()}
-                        progress={(averageNum / results.length) * 100}
-                        description={Math.trunc((averageNum / results.length) * 100).toString() + "% of total scores"}
+                        stats={quintileLevels[2].toString()}
+                        progress={(quintileLevels[2] / totalSkills) * 100}
+                        description={Math.trunc((quintileLevels[2] / totalSkills) * 100).toString() + "% of total scores"}
                     />
                 </Col>
                 <Col sm={6} xl={3}>
                     <StatisticsWidget2
                         variant="primary"
                         title="Above Average Scores"
-                        stats={aboveAverageNum.toString()}
-                        progress={(aboveAverageNum / results.length) * 100}
-                        description={Math.trunc((aboveAverageNum / results.length) * 100).toString() + "% of total scores"}
+                        stats={quintileLevels[3].toString()}
+                        progress={(quintileLevels[3] / totalSkills) * 100}
+                        description={Math.trunc((quintileLevels[3] / totalSkills) * 100).toString() + "% of total scores"}
                     />
                 </Col>
                 <Col sm={6} xl={3}>
                     <StatisticsWidget2
                         variant="primary"
                         title="Expert Scores"
-                        stats={expertNum.toString()}
-                        progress={(expertNum / results.length) * 100}
-                        description={Math.trunc((expertNum / results.length) * 100).toString() + "% of total scores"}
+                        stats={quintileLevels[4].toString()}
+                        progress={(quintileLevels[4] / totalSkills) * 100}
+                        description={Math.trunc((quintileLevels[4] / totalSkills) * 100).toString() + "% of total scores"}
                     />
+                </Col>
+            </Row>
+
+            <Row>
+                <Col xxl={4} md={6}>
+                    <RadialBarChart radarChartData={maleRatio} title="Male / Female Ratio" />
+                </Col>
+                <Col xxl={4} md={6}>
+                    <RadialBarChart radarChartData={localMaleRatio} title="Local Male / Local Female Ratio"  />
                 </Col>
             </Row>
 
