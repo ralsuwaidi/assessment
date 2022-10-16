@@ -4,12 +4,12 @@ const api = new APICore();
 
 // account
 function login(params: { email: string; password: string }) {
-    const baseUrl = '/login/';
+    const baseUrl = '/api/rest-auth/login/';
     return api.create(`${baseUrl}`, params);
 }
 
 function logout() {
-    const baseUrl = '/logout/';
+    const baseUrl = '/api/rest-auth/logout/';
     return api.create(`${baseUrl}`, {});
 }
 

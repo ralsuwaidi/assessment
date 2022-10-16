@@ -22,6 +22,9 @@ axios.interceptors.response.use(
             window.location.href = '/access-denied';
         } else {
             switch (error.response.status) {
+                case 400:
+                    message = 'Invalid credentials';
+                    break;
                 case 401:
                     message = 'Invalid credentials';
                     break;
