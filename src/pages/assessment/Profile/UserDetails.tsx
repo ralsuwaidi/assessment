@@ -30,22 +30,9 @@ const UserDetails = ({ userPortfolio }: PersonalDetailsProps) => {
         dispatch(getPortfolio(user.user.username))
     }, [dispatch])
 
-    //     // Similar to componentDidMount and componentDidUpdate:
-    //   useEffect(() => {
-    //     const baseUrl: string = `/api/user/${user.user.username}/`;
-    //     const response = api.get(`${baseUrl}`,{}).then(resp => {
-    //         console.log(resp.data.data[0].fields)
-    //     })
-    //   });
-
-    // console.log(axios.defaults.headers)
-
     if (portfolio === null) {
         return <p>loading</p>
     }
-
-    console.log(portfolio.data[0].fields)
-
 
     return (
         <Card>
@@ -53,8 +40,8 @@ const UserDetails = ({ userPortfolio }: PersonalDetailsProps) => {
                 <div className="text-center mt-2">
                     <img src={userPortfolio.profile_image} alt="" className="avatar-lg rounded-circle" />
                     <h4 className="mt-2 mb-0">{
-                        portfolio.data[0].fields.first_name} {portfolio.data[0].fields.last_name}</h4>
-                    <h6 className="text-muted fw-normal mt-2 mb-0">{portfolio.data[0].fields.last_name}</h6>
+                        portfolio.first_name} {portfolio.last_name}</h4>
+                    <h6 className="text-muted fw-normal mt-2 mb-0">{portfolio.last_name}</h6>
                     <h6 className="text-muted fw-normal mt-1 mb-3">{userPortfolio.country_residence}</h6>
 
 
@@ -75,7 +62,7 @@ const UserDetails = ({ userPortfolio }: PersonalDetailsProps) => {
                 </div>
 
                 {/* profile */}
-                <HeadingWithText heading='About' text={portfolio.data[0].fields.about} />
+                <HeadingWithText heading='About' text={portfolio.about} />
                 <div className="mt-3 pt-2 border-top">
                     <h4 className="mb-2 fs-15">Contact Information</h4>
                     <div className="table-responsive">
@@ -87,11 +74,11 @@ const UserDetails = ({ userPortfolio }: PersonalDetailsProps) => {
                                 </tr>
                                 <tr>
                                     <th scope="row">Phone</th>
-                                    <td>{portfolio.data[0].fields.mobile_number}</td>
+                                    <td>{portfolio.mobile_number}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Address</th>
-                                    <td>{portfolio.data[0].fields.country_residence}</td>
+                                    <td>{portfolio.country_residence}</td>
                                 </tr>
                             </tbody>
                         </table>

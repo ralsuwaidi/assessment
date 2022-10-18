@@ -22,9 +22,10 @@ import logoDark from '../../assets/images/logo-dark.png';
 import logoLight from '../../assets/images/logo-light.png';
 
 interface UserData {
-    name: string;
+    username: string;
     email: string;
-    password: string;
+    password1: string;
+    password2: string;
 }
 
 /* bottom links */
@@ -60,14 +61,18 @@ const Register = () => {
     }, [dispatch]);
 
     /*
-     * form validation schema
-     */
+    form validation schema
+    */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            name: yup.string().required(t('Please enter Name')),
-            email: yup.string().required('Please enter Email').email('Please enter valid Email'),
-            password: yup.string().required(t('Please enter Password')),
-            checkboxsignup: yup.bool().oneOf([true]),
+            username: yup.string().required('Please enter Username'),
+            email: yup.string().required('Please enter Email address'),
+            password1: yup.string().required('Please enter Password'),
+            password2: yup
+                .string()
+                .oneOf([yup.ref('password1'), null], "Passwords don't match")
+                .required('This value is required.'),
+            checkbox: yup.bool().oneOf([true]),
         })
     );
 
@@ -75,7 +80,7 @@ const Register = () => {
      * handle form submission
      */
     const onSubmit = (formData: UserData) => {
-        dispatch(signupUser(formData['name'], formData['email'], formData['password']));
+        dispatch(signupUser(formData['username'], formData['email'], formData['password1'], formData['password2']));
     };
 
     return (
@@ -112,11 +117,11 @@ const Register = () => {
                     defaultValues={{}}
                     formClass="authentication-form">
                     <FormInput
-                        label={t('Name')}
+                        label={t('Username')}
                         type="text"
-                        name="name"
+                        name="username"
                         startIcon={<FeatherIcons icon={'user'} className="icon-dual" />}
-                        placeholder={t('Your full name')}
+                        placeholder={t('Your Username')}
                         containerClass={'mb-3'}
                     />
                     <FormInput
@@ -130,9 +135,17 @@ const Register = () => {
                     <FormInput
                         label={t('Password')}
                         type="password"
-                        name="password"
+                        name="password1"
                         startIcon={<FeatherIcons icon={'lock'} className="icon-dual" />}
                         placeholder={t('Enter your Password')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Password')}
+                        type="password"
+                        name="password2"
+                        startIcon={<FeatherIcons icon={'lock'} className="icon-dual" />}
+                        placeholder={t('Confirm Password')}
                         containerClass={'mb-3'}
                     />
                     <FormInput
@@ -142,6 +155,7 @@ const Register = () => {
                         containerClass={'mb-3'}
                         defaultChecked
                     />
+
 
                     <div className="mb-3 text-center d-grid">
                         <Button type="submit" disabled={loading}>

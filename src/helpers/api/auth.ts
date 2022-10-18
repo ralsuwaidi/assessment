@@ -13,8 +13,8 @@ function logout() {
     return api.create(`${baseUrl}`, {});
 }
 
-function signup(params: { fullname: string; email: string; password: string }) {
-    const baseUrl = '/register/';
+function signup(params: { username: string; email: string; password1: string, password2: string }) {
+    const baseUrl = '/api/rest-auth/registration/';
     return api.create(`${baseUrl}`, params);
 }
 

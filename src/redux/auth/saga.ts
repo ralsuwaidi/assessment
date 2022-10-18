@@ -29,6 +29,16 @@ interface UserData {
     type: string;
 }
 
+interface RegisterData {
+    payload: {
+        username: string;
+        email: string;
+        password1: string;
+        password2: string;
+    };
+    type: string;
+}
+
 const api = new APICore();
 
 /**
@@ -65,9 +75,9 @@ function* logout(): SagaIterator {
     }
 }
 
-function* signup({ payload: { fullname, email, password } }: UserData): SagaIterator {
+function* signup({ payload: { username, email, password1, password2 } }: RegisterData): SagaIterator {
     try {
-        const response = yield call(signupApi, { fullname, email, password });
+        const response = yield call(signupApi, { username, email, password1, password2 });
         const user = response.data;
         // api.setLoggedInUser(user);
         // setAuthorization(user['token']);
@@ -91,7 +101,7 @@ function* forgotPassword({ payload: { email } }: UserData): SagaIterator {
 function* getPortfolio({payload: { username }} : UserData): SagaIterator {
     try {
         const response = yield call(getPortfolioApi, {username});
-        yield put(authApiResponseSuccess(AuthActionTypes.GET_PORTFOLIO, response.data.data[0].fields));
+        yield put(authApiResponseSuccess(AuthActionTypes.GET_PORTFOLIO, response.data));
     } catch (error: any) {
         yield put(authApiResponseError(AuthActionTypes.GET_PORTFOLIO, error));
     }

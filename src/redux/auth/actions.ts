@@ -47,9 +47,9 @@ export const logoutUser = (): AuthActionType => ({
     payload: {},
 });
 
-export const signupUser = (fullname: string, email: string, password: string): AuthActionType => ({
+export const signupUser = (username: string, email: string, password1: string, password2: string): AuthActionType => ({
     type: AuthActionTypes.SIGNUP_USER,
-    payload: { fullname, email, password },
+    payload: { username, email, password1, password2 },
 });
 
 export const forgotPassword = (email: string): AuthActionType => ({
