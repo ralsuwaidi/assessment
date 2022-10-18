@@ -23,4 +23,9 @@ function forgotPassword(params: { email: string }) {
     return api.create(`${baseUrl}`, params);
 }
 
-export { login, logout, signup, forgotPassword };
+function getPortfolio(params: { username: string }) {
+    const baseUrl: string = `/api/user/${params.username}/`;
+    return api.get(`${baseUrl}`, {});
+}
+
+export { login, logout, signup, forgotPassword, getPortfolio };

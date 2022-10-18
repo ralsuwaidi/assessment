@@ -11,7 +11,7 @@ const Root = () => {
 
         // check if user logged in or not and return url accordingly
         if (api.isUserAuthenticated() === false) {
-            url = 'skills/results';
+            url = 'auth/login';
         } else {
             url = 'dashboard/ecommerce';
         }

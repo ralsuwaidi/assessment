@@ -19,7 +19,7 @@ interface HeaderType {
 const Profile = () => {
     const { username } = useParams<{ username?: string }>();
 
-    console.log(window.location.pathname.replace('/portfolio/', '').replace('/', ''))
+    // console.log(window.location.pathname.replace('/portfolio/', '').replace('/', ''))
 
     return (
         <>

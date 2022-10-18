@@ -51,7 +51,7 @@ const AUTH_SESSION_KEY = 'shreyu_user';
  * @param {*} token
  */
 const setAuthorization = (token: string | null) => {
-    if (token) axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
+    if (token) axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     else delete axios.defaults.headers.common['Authorization'];
 };
 

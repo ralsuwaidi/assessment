@@ -47,30 +47,30 @@ const Results = () => {
     };
 
 
-    React.useEffect(() => {
-        const loadAsyncStuff = async () => {
-            const response = await fetch("https://codershq.ae/api/assessment/analytics/")
-            console.log(response.json().then(
-                data => {
-                    const analytics: AnalyticsTypes = data.data
-                    setRetakes(analytics.repeat_num)
-                    setQuintileLevels(analytics.quintile_levels)
-                    setTotalProfiles(analytics.total_profiles)
-                    setTotalSkills(analytics.total_skill)
-                    setTotalLocal(analytics.total_local_males + analytics.total_local_female)
-                    setlfJobs(analytics.total_lfj)
-                    setllfJobs(analytics.local_lfj)
+    // React.useEffect(() => {
+    //     const loadAsyncStuff = async () => {
+    //         const response = await fetch("https://api.codershq.ae/api/assessment/analytics/")
+    //         console.log(response.json().then(
+    //             data => {
+    //                 const analytics: AnalyticsTypes = data.data
+    //                 setRetakes(analytics.repeat_num)
+    //                 setQuintileLevels(analytics.quintile_levels)
+    //                 setTotalProfiles(analytics.total_profiles)
+    //                 setTotalSkills(analytics.total_skill)
+    //                 setTotalLocal(analytics.total_local_males + analytics.total_local_female)
+    //                 setlfJobs(analytics.total_lfj)
+    //                 setllfJobs(analytics.local_lfj)
 
 
-                    const all_users = analytics.total_profiles
-                    setTotalMale(Math.trunc((analytics.total_males / all_users) * 100))
-                    const all_local = analytics.total_local_female + analytics.total_local_female
-                    setTotalLocalMale(Math.trunc((analytics.total_local_males / all_local) * 100))
-                }
-            ))
-        }
-        loadAsyncStuff()
-    }, []);
+    //                 const all_users = analytics.total_profiles
+    //                 setTotalMale(Math.trunc((analytics.total_males / all_users) * 100))
+    //                 const all_local = analytics.total_local_female + analytics.total_local_female
+    //                 setTotalLocalMale(Math.trunc((analytics.total_local_males / all_local) * 100))
+    //             }
+    //         ))
+    //     }
+    //     loadAsyncStuff()
+    // }, []);
 
 
 

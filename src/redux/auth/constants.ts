@@ -9,4 +9,6 @@ export enum AuthActionTypes {
     FORGOT_PASSWORD_CHANGE = '@@auth/FORGOT_PASSWORD_CHANGE',
 
     RESET = '@@auth/RESET',
+
+    GET_PORTFOLIO = '@@get/PORTFOLIO',
 }

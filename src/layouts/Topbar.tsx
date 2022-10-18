@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
@@ -29,6 +29,7 @@ import avatar4 from '../assets/images/users/avatar-4.jpg';
 import logoSm from '../assets/images/logo-sm.png';
 import logoDark from '../assets/images/logo-dark.png';
 import logoLight from '../assets/images/logo-light.png';
+import { APICore } from '../helpers/api/apiCore';
 
 export interface NotificationItem {
     id: number;
@@ -38,6 +39,8 @@ export interface NotificationItem {
     avatar?: string;
     bgColor?: string;
 }
+
+const api = new APICore
 
 // get the notifications
 const Notifications: NotificationItem[] = [
@@ -163,6 +166,9 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     const dispatch = useDispatch<AppDispatch>();
 
     const [isopen, setIsopen] = useState<boolean>(false);
+    const { user } = useSelector((state: RootState) => ({
+        user: state.Auth.user
+    }));
 
     const navbarCssClasses: string = navCssClasses || '';
     const containerCssClasses: string = !hideLogo ? 'container-fluid' : '';
@@ -242,7 +248,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
                             <NotificationDropdown notifications={Notifications} />
                         </li>
                         <li className="dropdown notification-list topbar-dropdown">
-                            <ProfileDropdown profilePic={profilePic} menuItems={ProfileMenus} username={'Nik Patel'} />
+                            <ProfileDropdown profilePic={profilePic} menuItems={ProfileMenus} username={'username'} />
                         </li>
                         <li className="dropdown notification-list">
                             <button
