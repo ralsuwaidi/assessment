@@ -98,7 +98,7 @@ const ForgetPassword = () => {
                     )}
                 </p>
 
-                {resetPasswordSuccess && <Alert variant="success">{resetPasswordSuccess.message}</Alert>}
+                {resetPasswordSuccess && <Alert variant="success">{resetPasswordSuccess}</Alert>}
 
                 {error && (
                     <Alert variant="danger" className="my-2">

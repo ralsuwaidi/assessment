@@ -92,7 +92,7 @@ function* signup({ payload: { username, email, password1, password2 } }: Registe
 function* forgotPassword({ payload: { email } }: UserData): SagaIterator {
     try {
         const response = yield call(forgotPasswordApi, { email });
-        yield put(authApiResponseSuccess(AuthActionTypes.FORGOT_PASSWORD, response.data));
+        yield put(authApiResponseSuccess(AuthActionTypes.FORGOT_PASSWORD, response.data.detail));
     } catch (error: any) {
         yield put(authApiResponseError(AuthActionTypes.FORGOT_PASSWORD, error));
     }

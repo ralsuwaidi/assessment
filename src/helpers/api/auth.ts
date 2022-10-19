@@ -4,22 +4,22 @@ const api = new APICore();
 
 // account
 function login(params: { email: string; password: string }) {
-    const baseUrl = '/api/rest-auth/login/';
+    const baseUrl = '/rest-auth/login/';
     return api.create(`${baseUrl}`, params);
 }
 
 function logout() {
-    const baseUrl = '/api/rest-auth/logout/';
+    const baseUrl = '/rest-auth/logout/';
     return api.create(`${baseUrl}`, {});
 }
 
 function signup(params: { username: string; email: string; password1: string, password2: string }) {
-    const baseUrl = '/api/rest-auth/registration/';
+    const baseUrl = '/rest-auth/registration/';
     return api.create(`${baseUrl}`, params);
 }
 
 function forgotPassword(params: { email: string }) {
-    const baseUrl = '/forget-password/';
+    const baseUrl = '/rest-auth/password/reset/';
     return api.create(`${baseUrl}`, params);
 }
 
