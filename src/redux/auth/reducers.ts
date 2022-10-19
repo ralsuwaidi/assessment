@@ -30,7 +30,6 @@ interface AuthActionType {
         | AuthActionTypes.API_RESPONSE_ERROR
         | AuthActionTypes.LOGIN_USER
         | AuthActionTypes.LOGOUT_USER
-        | AuthActionTypes.GET_PORTFOLIO
         | AuthActionTypes.RESET;
     payload: {
         actionType?: string;
@@ -75,13 +74,6 @@ const Auth = (state: State = INIT_STATE, action: AuthActionType): any => {
 
                     };
                 }
-                case AuthActionTypes.GET_PORTFOLIO: {
-                    return {
-                        ...state,
-                        portfolio: action.payload.data,
-                        profileLoading: false,
-                    };
-                }
                 case AuthActionTypes.FORGOT_PASSWORD: {
                     return {
                         ...state,
@@ -102,13 +94,6 @@ const Auth = (state: State = INIT_STATE, action: AuthActionType): any => {
                         error: action.payload.error,
                         userLoggedIn: false,
                         loading: false,
-                    };
-                }
-                case AuthActionTypes.GET_PORTFOLIO: {
-                    return {
-                        ...state,
-                        error: action.payload.error,
-                        profileLoading: false,
                     };
                 }
                 case AuthActionTypes.SIGNUP_USER: {
@@ -146,8 +131,6 @@ const Auth = (state: State = INIT_STATE, action: AuthActionType): any => {
                 passwordChange: false,
                 resetPasswordSuccess: null,
             };
-        case AuthActionTypes.GET_PORTFOLIO:
-            return { ...state, profileLoading: true };
         default:
             return { ...state };
     }

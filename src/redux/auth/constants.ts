@@ -10,5 +10,4 @@ export enum AuthActionTypes {
 
     RESET = '@@auth/RESET',
 
-    GET_PORTFOLIO = '@@get/PORTFOLIO',
 }

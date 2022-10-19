@@ -1,7 +1,8 @@
 // constants
 import { PortfolioActionTypes } from './constants';
+import { PortfolioType } from '../../constants/Portfolio';
 
-export interface AuthActionType {
+export interface PortfolioActionType {
     type:
     | PortfolioActionTypes.API_RESPONSE_SUCCESS
     | PortfolioActionTypes.API_RESPONSE_ERROR
@@ -9,30 +10,19 @@ export interface AuthActionType {
     payload: {} | string;
 }
 
-interface UserData {
-    id: number;
-    email: string;
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-    token: string;
-}
-
 // common success
-export const authApiResponseSuccess = (actionType: string, data: UserData | {}): AuthActionType => ({
+export const portfolioApiResponseSuccess = (actionType: string, data: PortfolioType | {}): PortfolioActionType => ({
     type: PortfolioActionTypes.API_RESPONSE_SUCCESS,
     payload: { actionType, data },
 });
 
 // common error
-export const authApiResponseError = (actionType: string, error: string): AuthActionType => ({
+export const portfolioApiResponseError = (actionType: string, error: string): PortfolioActionType => ({
     type: PortfolioActionTypes.API_RESPONSE_ERROR,
     payload: { actionType, error },
 });
 
-export const getPortfolio = (username: string): AuthActionType => ({
+export const getPortfolio = (username: string): PortfolioActionType => ({
     type: PortfolioActionTypes.GET_PORTFOLIO,
     payload: { username },
 });

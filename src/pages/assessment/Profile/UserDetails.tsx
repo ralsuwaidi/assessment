@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { APICore } from '../../../helpers/api/apiCore';
 import { getPortfolio } from '../../../redux/actions';
 import { AppDispatch, RootState } from '../../../redux/store';
 
@@ -17,13 +16,12 @@ interface PersonalDetailsProps {
 }
 
 
-
 const UserDetails = ({ userPortfolio }: PersonalDetailsProps) => {
     const dispatch = useDispatch<AppDispatch>();
 
     const { user, portfolio } = useSelector((state: RootState) => ({
         user: state.Auth.user,
-        portfolio: state.Auth.portfolio,
+        portfolio: state.Portfolio.portfolio,
     }));
 
     useEffect(() => {

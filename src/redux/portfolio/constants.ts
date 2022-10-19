@@ -1,6 +1,6 @@
 export enum PortfolioActionTypes {
-    API_RESPONSE_SUCCESS = '@@auth/API_RESPONSE_SUCCESS',
-    API_RESPONSE_ERROR = '@@auth/API_RESPONSE_ERROR',
+    API_RESPONSE_SUCCESS = '@@portfolio/API_RESPONSE_SUCCESS',
+    API_RESPONSE_ERROR = '@@portfolio/API_RESPONSE_ERROR',
 
-    GET_PORTFOLIO = '@@get/PORTFOLIO',
+    GET_PORTFOLIO = '@@portfolio/GET_PORTFOLIO',
 }

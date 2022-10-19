@@ -1,10 +1,6 @@
-// apicore
-import { APICore } from '../../helpers/api/apiCore';
-
 // constants
 import { PortfolioActionTypes } from './constants';
-
-const api = new APICore();
+import { PortfolioType } from '../../constants/Portfolio';
 
 // initial state of the portfolio
 const INIT_STATE = {
@@ -12,35 +8,24 @@ const INIT_STATE = {
     profileLoading: false,
 };
 
-interface UserData {
-    id: number;
-    email: string;
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-    token: string;
-}
-
-interface AuthActionType {
+interface PortfolioActionType {
     type:
         | PortfolioActionTypes.API_RESPONSE_SUCCESS
         | PortfolioActionTypes.API_RESPONSE_ERROR
         | PortfolioActionTypes.GET_PORTFOLIO;
     payload: {
         actionType?: string;
-        data?: UserData | {};
+        data?: PortfolioType | {};
         error?: string;
     };
 }
 
 interface State {
-    portfolio?: UserData | {};
+    portfolio?: PortfolioType | {};
     profileLoading?: boolean;
 }
 
-const Auth = (state: State = INIT_STATE, action: AuthActionType): any => {
+const Portfolio = (state: State = INIT_STATE, action: PortfolioActionType): any => {
     switch (action.type) {
         // API Response Success
         case PortfolioActionTypes.API_RESPONSE_SUCCESS:
@@ -77,4 +62,4 @@ const Auth = (state: State = INIT_STATE, action: AuthActionType): any => {
     }
 };
 
-export default Auth;
+export default Portfolio;

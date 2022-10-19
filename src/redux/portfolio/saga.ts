@@ -1,39 +1,25 @@
 import { all, fork, put, takeEvery, call } from "redux-saga/effects";
 import { SagaIterator } from "@redux-saga/core";
 
-// apicore
-import { APICore } from "../../helpers/api/apiCore";
-
 // helpers
 import { getPortfolio as getPortfolioApi } from "../../helpers/";
 
 // actions
-import { authApiResponseSuccess, authApiResponseError } from "./actions";
+import {
+  portfolioApiResponseSuccess,
+  portfolioApiResponseError,
+} from "./actions";
 
 // constants
 import { PortfolioActionTypes } from "./constants";
+import { PortfolioType } from "../../constants/Portfolio";
 
 interface UserData {
   payload: {
     username: string;
-    password: string;
-    fullname: string;
-    email: string;
   };
   type: string;
 }
-
-interface RegisterData {
-  payload: {
-    username: string;
-    email: string;
-    password1: string;
-    password2: string;
-  };
-  type: string;
-}
-
-const api = new APICore();
 
 /**
  * Get the user's portfolio
@@ -43,10 +29,15 @@ function* getPortfolio({ payload: { username } }: UserData): SagaIterator {
   try {
     const response = yield call(getPortfolioApi, { username });
     yield put(
-      authApiResponseSuccess(PortfolioActionTypes.GET_PORTFOLIO, response.data)
+      portfolioApiResponseSuccess(
+        PortfolioActionTypes.GET_PORTFOLIO,
+        response.data
+      )
     );
   } catch (error: any) {
-    yield put(authApiResponseError(PortfolioActionTypes.GET_PORTFOLIO, error));
+    yield put(
+      portfolioApiResponseError(PortfolioActionTypes.GET_PORTFOLIO, error)
+    );
   }
 }
 
@@ -56,8 +47,8 @@ export function* watchGetPortfolio() {
   yield takeEvery(PortfolioActionTypes.GET_PORTFOLIO, getPortfolio);
 }
 
-function* authSaga() {
+function* portfolioSaga() {
   yield all([fork(watchGetPortfolio)]);
 }
 
-export default authSaga;
+export default portfolioSaga;

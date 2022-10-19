@@ -10,7 +10,6 @@ import {
     logout as logoutApi,
     signup as signupApi,
     forgotPassword as forgotPasswordApi,
-    getPortfolio as getPortfolioApi,
 } from '../../helpers/';
 
 // actions
@@ -98,15 +97,6 @@ function* forgotPassword({ payload: { email } }: UserData): SagaIterator {
     }
 }
 
-function* getPortfolio({payload: { username }} : UserData): SagaIterator {
-    try {
-        const response = yield call(getPortfolioApi, {username});
-        yield put(authApiResponseSuccess(AuthActionTypes.GET_PORTFOLIO, response.data));
-    } catch (error: any) {
-        yield put(authApiResponseError(AuthActionTypes.GET_PORTFOLIO, error));
-    }
-}
-
 export function* watchLoginUser() {
     yield takeEvery(AuthActionTypes.LOGIN_USER, login);
 }
@@ -123,12 +113,8 @@ export function* watchForgotPassword(): any {
     yield takeEvery(AuthActionTypes.FORGOT_PASSWORD, forgotPassword);
 }
 
-export function* watchGetPortfolio() {
-    yield takeEvery(AuthActionTypes.GET_PORTFOLIO, getPortfolio);
-}
-
 function* authSaga() {
-    yield all([fork(watchLoginUser), fork(watchLogout), fork(watchSignup), fork(watchForgotPassword), fork(watchGetPortfolio)]);
+    yield all([fork(watchLoginUser), fork(watchLogout), fork(watchSignup), fork(watchForgotPassword)]);
 }
 
 export default authSaga;

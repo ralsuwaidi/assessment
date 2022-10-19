@@ -10,7 +10,6 @@ export interface AuthActionType {
     | AuthActionTypes.LOGIN_USER
     | AuthActionTypes.LOGOUT_USER
     | AuthActionTypes.RESET
-    | AuthActionTypes.GET_PORTFOLIO
     | AuthActionTypes.SIGNUP_USER;
     payload: {} | string;
 }
@@ -60,9 +59,4 @@ export const forgotPassword = (email: string): AuthActionType => ({
 export const resetAuth = (): AuthActionType => ({
     type: AuthActionTypes.RESET,
     payload: {},
-});
-
-export const getPortfolio = (username: string): AuthActionType => ({
-    type: AuthActionTypes.GET_PORTFOLIO,
-    payload: { username },
 });
