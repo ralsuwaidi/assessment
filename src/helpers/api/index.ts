@@ -1,4 +1,5 @@
-import { login, logout, signup, forgotPassword, getPortfolio } from './auth';
+import { login, logout, signup, forgotPassword } from './auth';
+import { getPortfolio } from './portfolio';
 
 import {pluralsightClient} from './pluralsightClient';
 
